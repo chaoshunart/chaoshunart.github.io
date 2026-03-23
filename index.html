@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>超顺艺术 · 专注少儿艺术特长培训</title>
+    <!-- 引入 Font Awesome 图标库 (v6 免费版本) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="text/javascript" src="https://wulangsir.github.io/index/static/js/jquery-1.2.6.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #fefcf9;
+            color: #2d2f31;
+            line-height: 1.5;
+        }
+
+        /* 主色调：宝塔红 + 高级灰 */
+        :root {
+            --primary: #c62828;        /* 主红 —— 超顺宝塔红 */
+            --primary-light: #ef5350;   /* 亮红 */
+            --secondary: #2c3e50;     /* 深蓝灰，稳重 */
+            --accent: #ffb74d;         /* 点缀黄 */
+            --bg-light: #faf7f2;
+            --gray-text: #5f5f5f;
+            --border-light: #eae3d9;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* 头部 */
+        .header {
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-graphic {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, #f3793a 100%);
+            border-radius: 18px 8px 18px 8px;  /* 富有设计感的切割 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 21px;
+            line-height: 21px;
+            text-align: center;
+            font-weight: 700;
+            box-shadow: 0 6px 12px rgba(241,90,36,0.2);
+            transform: rotate(-2deg);
+            transition: transform 0.2s ease;
+        }
+
+        .logo-graphic:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--secondary);
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            font-weight: 400;
+            letter-spacing: 2px;
+            border-left: 3px solid var(--primary);
+            padding-left: 12px;
+            margin-left: 6px;
+        }
+
+        .nav a {
+            margin-left: 36px;
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            transition: 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        .nav a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* 手机简化菜单 (响应式) */
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            color: var(--secondary);
+            cursor: pointer;
+        }
+
+        /* 主体内容 */
+        .hero {
+            background: linear-gradient(112deg, #fff6ed 0%, #ffffff 60%);
+            padding: 60px 0 40px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .hero-grid {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text .tag {
+            background: rgba(241,90,36,0.1);
+            color: var(--primary);
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px dashed var(--primary-light);
+        }
+
+        .hero-text h2 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--secondary);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h2 em {
+            color: var(--primary);
+            font-style: normal;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: #3e4a5a;
+            max-width: 600px;
+            margin-bottom: 32px;
+        }
+
+        .stats-mini {
+            display: flex;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .stats-mini-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stats-mini-item .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .hero-image {
+            flex: 1;
+            background: #d9d0c0;
+            height: 360px;
+            border-radius: 40px 12px 40px 12px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%"><rect width="400" height="300" fill="%23f0e4d5"/><circle cx="200" cy="130" r="60" fill="%23f3793a" opacity="0.7"/><circle cx="250" cy="170" r="40" fill="%23f3c614" opacity="0.8"/><circle cx="140" cy="180" r="30" fill="%232c3e50" opacity="0.6"/><text x="100" y="50" font-family="Arial" font-size="26" fill="%23000000" font-weight="bold" opacity="0.9">🎨 延安超顺艺术</text></svg>');
+            background-size: cover;
+            box-shadow: 20px 20px 0 var(--primary-light);
+            transition: 0.3s;
+            border: 2px solid white;
+        }
+
+        /* 简介卡片 */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .section-title h3 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .section-title p {
+            color: var(--gray-text);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 16px auto 0;
+        }
+
+        .about-grid {
+            display: flex;
+            gap: 60px;
+            background: white;
+            padding: 48px 48px;
+            border-radius: 48px 12px 48px 12px;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-light);
+        }
+
+        .about-text {
+            flex: 2;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #2d3a4a;
+        }
+
+        .about-highlight {
+            background: var(--bg-light);
+            padding: 20px 28px;
+            border-radius: 60px 12px 60px 12px;
+            border-left: 6px solid var(--primary);
+            margin: 24px 0;
+            font-weight: 500;
+        }
+
+        .about-features {
+            flex: 1;
+            background: var(--secondary);
+            color: white;
+            padding: 32px 28px;
+            border-radius: 32px 8px 32px 8px;
+        }
+
+        .about-features h4 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+
+        .about-features ul {
+            list-style: none;
+        }
+
+        .about-features li {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .about-features i {
+            color: var(--primary);
+            width: 24px;
+            font-size: 1.4rem;
+        }
+
+        /* 课程/核心板块 */
+        .courses {
+            background: var(--bg-light);
+        }
+
+        .course-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 32px 16px;
+            text-align: center;
+            border-radius: 40px 8px 40px 8px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.02);
+            transition: 0.2s;
+            border: 1px solid var(--border-light);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-light);
+            box-shadow: 0 16px 24px -8px rgba(241,90,36,0.15);
+        }
+
+        .card i {
+            font-size: 3.2rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: var(--secondary);
+        }
+
+        .card p {
+            color: var(--gray-text);
+        }
+
+        /* 数据+愿景 */
+        .stats-area {
+            background: white;
+            border-radius: 80px 12px 80px 12px;
+            padding: 48px 32px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-around;
+            box-shadow: 0 8px 0 var(--border-light);
+            border: 1px solid #e0d6ca;
+        }
+
+        .stat-block {
+            text-align: center;
+        }
+
+        .stat-block .num {
+            font-size: 3.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .stat-block .label {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .vision-block {
+            max-width: 400px;
+            border-left: 2px dashed var(--primary-light);
+            padding-left: 32px;
+        }
+
+        .vision-block h5 {
+            font-size: 1.8rem;
+            color: var(--secondary);
+        }
+
+        .vision-block p {
+            color: var(--gray-text);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* 分校信息 */
+        .locations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        .location-item {
+            background: white;
+            padding: 18px 28px;
+            border-radius: 60px 8px 60px 8px;
+            border: 1px solid var(--border-light);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 0 #e0d6ca;
+        }
+
+        .location-item i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        /* footer */
+        .footer {
+            background: var(--secondary);
+            color: #ddd;
+            padding: 48px 0 32px;
+            border-top: 6px solid var(--primary);
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo .logo-graphic {
+            width: 48px;
+            height: 48px;
+            font-size: 22px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            margin: 0 16px;
+            transition: 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 48px;
+            font-size: 0.9rem;
+            color: #8f9aa7;
+            border-top: 1px solid #3d5062;
+            padding-top: 24px;
+        }
+
+           /* ===== 弹窗 ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 999; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: white; max-width: 400px; width: 90%;margin:10px auto; padding: 36px 28px;
+            border-radius: 60px 12px 60px 12px; text-align: center;
+            box-shadow: 0 25px 40px rgba(198,40,40,0.3);
+            border: 3px solid var(--primary-light);
+            position: relative;
+        }
+        .modal-content h3 { font-size: 2rem; color: var(--primary); margin-bottom: 20px; }
+        .modal-content input, .modal-content select {
+            width: 100%; padding: 14px 18px; margin: 10px 0; border: 1px solid #ccc;
+            border-radius: 60px 8px 60px 8px; font-size: 1rem;
+        }
+        .modal-content button {
+            background: var(--primary); color: white; border: none; padding: 14px 24px;
+            border-radius: 60px 8px 60px 8px; font-size: 1.2rem; cursor: pointer; margin-top: 10px;
+            width: 100%;
+        }
+        .close-modal {
+            position: absolute; top: 16px; right: 20px; font-size: 28px; cursor: pointer;
+            color: var(--primary-dark);
+        }
+        /* 响应式 */
+        @media (max-width: 800px) {
+
+            .logo-graphic,.logo-text>h1 span{display: none;}
+            .nav {display: none;}
+            .menu-toggle {
+                display: block;
+                margin:0 20px;
+            }
+            .hero-grid {
+                flex-direction: column;
+            }
+            .about-grid {
+                flex-direction: column;
+            }
+            .stats-area {
+                flex-direction: column;
+                gap: 32px;
+                text-align: center;
+            }
+            .vision-block {
+                border-left: none;
+                border-top: 2px dashed var(--primary-light);
+                padding-left: 0;
+                padding-top: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 头部：超顺艺术logo + 企业名称 -->
+<header class="header">
+    <div class="container header-inner">
+        <div class="logo-area">
+            <!-- 超顺艺术logo图形 -->
+            <div class="logo-graphic">
+                <span>超顺艺术</span>
+            </div>
+            <div class="logo-text">
+                <h1>
+                 <img src="./chaoshun_logo.png" height="60" width="230" alt="超顺logo">
+                 <span>chaoshun art</span>
+                 </h1>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="javascript:;" class="active">首页</a>
+            <a href="#about">关于</a>
+            <a href="#class">课程</a>
+            <a href="#xiaoqu">校区</a>
+          <!--   <a href="#">联系</a> -->
+        </nav>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- 首屏 hero 品牌印象 -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <span class="tag"><i class="fas fa-star"></i> 延安·艺术教育领军者</span>
+                <h2>雕琢自信 <em>超顺未来</em></h2>
+                <p class="hero-desc">超顺艺术——专注3-16岁少儿艺术特长培训，跆拳道、街舞、爵士舞、绘画、书法……让孩子在热爱中闪闪发光。</p>
+                <div class="stats-mini">
+                    <div class="stats-mini-item"><span class="number">5000㎡+</span> <span>教学场地</span></div>
+                    <div class="stats-mini-item"><span class="number">8</span> <span>家直营校区</span></div>
+                    <div class="stats-mini-item"><span class="number">3400+</span> <span>在读学员</span></div>
+                    <div class="stats-mini-item"><span class="number">50000+</span> <span>服务学员</span></div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- 背景装饰图片用css示意，展示超顺艺术活力 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于超顺 / 企业简介 (结合搜索结果真实信息) -->
+    <section class="section"id="about">
+        <div class="container" >
+            <div class="section-title">
+                <h3>因为专注 · 所以超顺</h3>
+                <p>十年艺术教育沉淀，延安本土专业少儿特长培训品牌</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p><strong>超顺艺术</strong> 成立于2013年3月，总部位于延安市宝塔区龙昌园。公司现拥有总校1所、分校7所，教学面积超过5000平米，在校学员3400余人，专业教师团队86人（本科以上学历，平均教龄3年以上）。</p>
+                    <p>我们不仅教授技能，更关注品格塑造。2018年，超顺在延安大学设立“超顺奖学金”，鼓励优秀学子勇敢追梦。旗下拥有延安市学员数量最多的跆拳道馆（1000+学员）、街舞机构（1000+学员），以及延安唯一的曳街舞培训基地。</p>
+                    <div class="about-highlight">
+                        <i class="fas fa-quote-left" style="color: var(--primary); opacity: 0.7;"></i>
+                        未来五年，超顺艺术将在整个延安地区推行“超顺连锁计划，让你在家门口学习，服务万千学员”的愿景，同时拓展科学教育产业，给孩子的梦想插上翅膀。
+                    </div>
+                </div>
+                <div class="about-features">
+                    <h4>超顺核心特色</h4>
+                    <ul>
+                        <li><i class="fas fa-medal"></i> 8家校区 · 就近入学</li>
+                        <li><i class="fas fa-user-graduate"></i> 86+ 专业全职教师</li>
+                        <li><i class="fas fa-heart"></i> 超顺奖学金 · 公益</li>
+                        <li><i class="fas fa-music"></i> 12+ 艺术门类</li>
+                        <!-- <li><i class="fas fa-calendar-alt"></i> 每年20天以上长假</li> -->
+                        <!-- <li><i class="fas fa-chart-line"></i> 股权激励 · 共同成长</li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心课程 (从招聘信息和官网提炼) -->
+    <section class="section courses" id="class">
+        <div class="container">
+            <div class="section-title">
+                <h3>多元课程 · 自由绽放</h3>
+                <p>舞蹈 / 绘画 / 书法 / 器乐 / …… 总有舞台属于你</p>
+            </div>
+            <div class="course-cards">
+                <div class="card"><i class="fas fa-child"></i><h4>街舞</h4><p>Breaking · 潮舞社</p></div>
+                <div class="card"><i class="fas fa-shoe-prints"></i><h4>爵士舞</h4><p>独家·顶级师资</p></div>
+                <div class="card"><i class="fas fa-paint-brush"></i><h4>绘画</h4><p>创意美术 · 素描</p></div>
+                <div class="card"><i class="fas fa-pen-fancy"></i><h4>书法</h4><p>硬笔·软笔</p></div>
+                <div class="card"><i class="fas fa-fist-raised"></i><h4>跆拳道</h4><p>竞技·品势</p></div>
+                <div class="card"><i class="fas fa-heartbeat"></i><h4>体适能</h4><p>体能·格斗</p></div>
+                <div class="card"><i class="fas fa-music"></i><h4>器乐</h4><p>钢琴·架子鼓·吉他</p></div>
+              <!--   <div class="card"><i class="fas fa-language"></i><h4>口才</h4><p>主持·演讲</p></div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 数据与愿景区块 (引用搜索结果数据) -->
+    <section class="section">
+        <div class="container">
+            <div class="stats-area">
+                <div class="stat-block">
+                    <div class="num">3400+</div>
+                    <div class="label">同期在读学员</div>
+                </div>
+                <div class="stat-block">
+                    <div class="num">100+</div>
+                    <div class="label">专业教职工</div>
+                </div>
+                <div class="stat-block">
+                    <div class="num">5000㎡</div>
+                    <div class="label">教学空间</div>
+                </div>
+                <div class="vision-block">
+                    <h5>🚩 超顺连锁计划</h5>
+                    <p>“超顺连锁计划，千家学校，服务万千学员” 拓展科技教育，培养未来人才。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 校区布局 (基于搜索结果) -->
+    <section class="section" style="padding-top: 0;"id="xiaoqu">
+        <div class="container" >
+            <div class="section-title">
+                <h3>校区分布</h3>
+                <p>延安 · 8家校区便捷就读</p>
+            </div>
+            <div class="locations">
+                <div class="location-item"><i class="fas fa-location-dot"></i> 龙昌园校区</div>
+                <div class="location-item"><i class="fas fa-location-dot"></i> 红化1校区</div>
+                <div class="location-item"><i class="fas fa-location-dot"></i> 红化2校区</div>
+                <div class="location-item"><i class="fas fa-location-dot"></i> 二庄科校区</div>
+                <div class="location-item"><i class="fas fa-location-dot"></i> 丽景校区</div>
+                <div class="location-item"><i class="fas fa-location-dot"></i> 毛纺厂校区</div>
+                <div class="location-item"><i class="fas fa-location-dot"></i> 新城校区</div>
+                <div class="location-item"><i class="fas fa-location-dot"></i> 延安大学校区</div>
+                <div class="location-item"><i class="fas fa-location-dot"></i> 合作小学社团（30+所）</div>
+            </div>
+            <p style="text-align: center; margin-top: 32px; color: var(--gray-text);">***总部：超顺艺术在【延安】***  </p>
+        </div>
+    </section>
+
+    <!-- 小提示：可互联网搜索“超顺艺术”了解更多 -->
+    <section style="background: #eef2f5; padding: 24px; border-radius: 60px 0; margin-bottom: 40px;">
+        <div class="container" style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+            <i class="fas fa-globe" style="font-size: 3rem; color: var(--primary);"></i>
+            <span style="font-size: 1.2rem;">🔍 互联网搜索关键字 <strong>“延安超顺艺术”</strong> 可查询更详尽的品牌动态与招聘信息 </span>
+        </div>
+    </section>
+</main>
+
+<!-- footer 企业信息 -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-logo">
+                <div class="logo-graphic" style="width:48px; height:48px; font-size:20px;">
+                <span>超顺艺术</span>
+            </div>
+                <span style="font-size: 1.5rem; font-weight: 600; color: white;">陕西延安</span>
+            </div>
+            <div class="footer-links">
+                <a href="#">关于我们</a>
+                <a href="#">加入超顺</a>
+                <a href="#">合作联系</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2013-2026 延安市宝塔区超顺艺术培训中心 / 超顺体育培训有限公司 版权所有 <br>
+            </p>
+            <p style="margin-top: 12px;">🤝 理念：给孩子专业的艺术滋养，培养孩子的未来！</p>
+        </div>
+    </div>
+</footer>
+
+<!-- 预约弹窗 (默认隐藏) -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            <h3>🎨 预约体验课</h3>
+            <input type="text" placeholder="学员姓名" id="modalName">
+            <input type="tel" placeholder="联系电话" id="modalTel">
+            <select id="modalCourse">
+                <option>街舞</option>
+                <option>爵士舞</option>
+                <option>跆拳道</option>
+                <option>绘画</option>
+                <option>书法</option>
+                <option>口才</option>
+            </select>
+            <button id="modalSubmit">立即预约</button>
+            <p style="margin-top:15px; font-size:0.9rem;">延安8校区通用。</p>
+        </div>
+    </div>
+
+
+<script type="text/javascript" src="https://wulangsir.github.io/index/static/js/jquery-1.2.6.min.js"></script>
+    <script>
+        (function() {
+            // 1. 页面切换 (导航点击显示隐藏页面)
+            const navLinks = document.querySelectorAll('#mainNav a');
+            const pages = {
+                home: document.getElementById('page-home'),
+                courses: document.getElementById('page-courses'),
+                teachers: document.getElementById('page-teachers'),
+                students: document.getElementById('page-students'),
+                coop: document.getElementById('page-coop'),
+                chain: document.getElementById('page-chain')
+            };
+
+            function setActivePage(pageId) {
+                // 隐藏所有页面
+                Object.values(pages).forEach(p => p.classList.remove('active'));
+                // 显示选中页面
+                if (pages[pageId]) pages[pageId].classList.add('active');
+                // 更新导航active类
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.page === pageId) link.classList.add('active');
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.dataset.page;
+                    if (pageId) setActivePage(pageId);
+                });
+            });
+
+            // 2. 弹窗逻辑：18s后弹出，每日一次 (localStorage)
+            const modal = document.getElementById('modalOverlay');
+            const closeBtn = document.getElementById('closeModalBtn');
+            const submitBtn = document.getElementById('modalSubmit');
+
+            function canShowPopup() {
+                const last = localStorage.getItem('chaoshun_popup_date');
+                const today = new Date().toDateString();  // 例如 "Tue Mar 10 2026"
+                if (last === today) return false;  // 今天已经弹过
+                return true;
+            }
+
+            function setPopupShown() {
+                const today = new Date().toDateString();
+                localStorage.setItem('chaoshun_popup_date', today);
+            }
+
+            function showModal() {
+                if (!canShowPopup()) return;
+                modal.style.display = 'flex';
+                setPopupShown();  // 一旦显示就记录（关闭或提交也会再次记录，但无所谓）
+            }
+
+            function hideModal() {
+                modal.style.display = 'none';
+            }
+
+            // 关闭按钮
+            closeBtn.addEventListener('click', function() {
+                hideModal();
+                // 关闭也认为已弹过（setPopupShown已在show时记录，但以防万一）
+                // 如果之前未记录？showModal已经记录，所以不需要重复
+            });
+
+            // 点击遮罩关闭（可选）
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) hideModal();
+            });
+
+            // 提交按钮
+            submitBtn.addEventListener('click', function() {
+                const name = document.getElementById('modalName').value.trim();
+                const tel = document.getElementById('modalTel').value.trim();
+                if (!name || !tel) {
+                    alert('请填写姓名和电话');
+                    return;
+                }
+                alert(`预约失败！${name}，请联系前台老师！电话:17729530759(前台)/18291165285(负责人)`);
+                //alert(`预约失败！${name}，课程顾问会尽快联系您。`);
+                hideModal();
+                // 提交时也已经弹过，setPopupShown在showModal已经执行，无需再次
+            });
+
+
+            // 计时器 18s 弹出 (18,000 ms) 注意调试可改为短时间，正式18s
+            setTimeout(function() {
+                // 再次检查能否弹出(防止在计时期间已经手动触发)
+                if (canShowPopup()) {
+                    showModal();
+                }
+            }, 3000);  // 18秒
+
+            // 额外优化：如果用户刷新页面，同一天不再弹(已用localStorage控制)
+
+
+            submitBtn.click(function() {
+                alert("预约失败！请联系前台老师！\\n 电话:17729530759(前台)/18291165285(负责人)");
+            });
+
+        })();
+
+
+    </script>
+</body>
+</html>
